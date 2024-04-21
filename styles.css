@@ -1,0 +1,51 @@
+body {
+    font-family: system-ui;
+    background: rgb(204, 165, 165);
+    
+    color: white;
+    text-align: center;
+  }
+  
+  .header {
+    text-align: center;
+    margin: 0%;
+    height: 100px;
+    background-color: #8f3056;
+    color: black;
+  }
+  
+ 
+  
+ 
+  .bar {
+	width:3px;
+	height:49px;
+	position:absolute;
+	top:-1px;
+  }
+  #goToIndexBtn {
+    display: inline-block; /* Makes the link a block element */
+    padding: 10px 20px; /* Adds padding inside the link */
+    background-color: #007bff; /* Sets the background color */
+    color: #fff; /* Sets the text color */
+    border-radius: 5px; /* Adds rounded corners */
+    text-decoration: none; /* Removes the default underline */
+    transition: background-color 0.3s ease; /* Adds a smooth transition effect */
+}
+
+#goToIndexBtn:hover {
+    background-color: #0056b3; /* Changes the background color on hover */
+}
+button {
+  padding: 10px 20px; /* Adds padding inside the button */
+  background-color: #007bff; /* Sets the background color */
+  color: #fff; /* Sets the text color */
+  border: none; /* Removes the default button border */
+  border-radius: 5px; /* Adds rounded corners */
+  cursor: pointer; /* Changes the cursor to a pointer on hover */
+  transition: background-color 0.3s ease; /* Adds a smooth transition effect */
+}
+
+button:hover {
+  background-color: #0056b3; /* Changes the background color on hover */
+}

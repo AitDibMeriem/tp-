@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input and Results Page</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  table {
+    width: 99%;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  th {
+    background-color: #545252;
+  }
+  input[type="number"] {
+    width: 98%;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Javascript & Events</h1>
+  <h4>ORDER ENTRY</h4>
+</div>
+<hr>
+
+<table id="orderTable">
+  <tr>
+    <th>Product</th>
+    <th>Quantity</th>
+  </tr>
+  <tr>
+    <td>
+      <select id="product1">
+        <option value="100">product1/PU=100DA</option>
+        <option value="200">product2/PU=200DA</option>
+        <option value="300">product3/PU=300DA</option>
+        <option value="400">product4/PU=400DA</option>
+        <option value="500">product5/PU=500DA</option>
+      </select>
+    </td>
+    <td><input type="number" id="quantity1" min="0" placeholder="Enter a number"></td>
+  </tr>
+  <tr>
+    <td>
+      <select id="product2">
+        <option value="100">product1/PU=100DA</option>
+        <option value="200">product2/PU=200DA</option>
+        <option value="300">product3/PU=300DA</option>
+        <option value="400">product4/PU=400DA</option>
+        <option value="500">product5/PU=500DA</option>
+      </select>
+    </td>
+    <td><input type="number" id="quantity2" min="0" placeholder="Enter a number"></td>
+  </tr>
+  <tr>
+    <td>
+      <select id="product3">
+        <option value="100">product1/PU=100DA</option>
+        <option value="200">product2/PU=200DA</option>
+        <option value="300">product3/PU=300DA</option>
+        <option value="400">product4/PU=400DA</option>
+        <option value="500">product5/PU=500DA</option>
+      </select>
+    </td>
+    <td><input type="number" id="quantity3" min="0" placeholder="Enter a number"></td>
+  </tr>
+  
+</table>
+<tr>
+    <td colspan="2">
+      <label for="tax">Tax Extension 30%:</label>
+      <input type="radio" id="tax30" name="tax" value="30" checked="false">
+      <h2>Reduction:</h2>
+      <input type="radio" id="reduction0" name="reduction" value="0" checked>
+      <label for="reduction0">0%</label>
+      <input type="radio" id="reduction10" name="reduction" value="10">
+      <label for="reduction10">10%</label>
+      <input type="radio" id="reduction20" name="reduction" value="20">
+      <label for="reduction20">20%</label>
+    </td>
+  </tr><br>
+  <tr>
+    <td colspan="2">
+      <button onclick="calculateResult()">Calculate</button>
+    </td>
+  </tr><BR><br>
+<button onclick="addNewProject()">Add New Project</button>
+
+<script>
+let projectId = 4;
+
+function calculateResult() {
+  // Clear previously cloned amount rows
+  const clonedAmountRows = document.querySelectorAll("#orderTable .cloned-row");
+  clonedAmountRows.forEach(row => row.remove());
+
+  // Calculate results
+  const selectedOptions = [];
+  const userNumbers = [];
+  for (let i = 1; i <= 3; i++) {
+    selectedOptions.push(parseFloat(document.getElementById("product" + i).value));
+    userNumbers.push(parseFloat(document.getElementById("quantity" + i).value));
+  }
+
+  const reductionPercentage = parseFloat(document.querySelector('input[name="reduction"]:checked').value);
+  const taxExtension = parseFloat(document.querySelector('input[name="tax"]:checked').value);
+  const reductionFactor = 1 - reductionPercentage / 100;
+  const extendedFactor = 1 + taxExtension / 100;
+
+  let totalSum = 0;
+  selectedOptions.forEach((option, index) => {
+    const result = option * userNumbers[index];
+    totalSum += result;
+
+    const newRow = document.createElement("tr");
+    newRow.classList.add("cloned-row");
+    newRow.innerHTML = `
+      <td>Amount${index + 1}</td>
+      <td>${result.toFixed(2)} DA</td>
+    `;
+    document.getElementById("orderTable").appendChild(newRow);
+  });
+
+  const reductionAmount = totalSum * (reductionFactor);
+  const netAmount = totalSum - reductionAmount;
+
+  const reductionRow = document.createElement("tr");
+  reductionRow.classList.add("cloned-row");
+  reductionRow.innerHTML = `
+    <td>Reduction Amount</td>
+    <td>${reductionAmount.toFixed(2)} DA</td>
+  `;
+  document.getElementById("orderTable").appendChild(reductionRow);
+
+  const netAmountRow = document.createElement("tr");
+  netAmountRow.classList.add("cloned-row");
+  netAmountRow.innerHTML = `
+    <td>Net Amount</td>
+    <td>${netAmount.toFixed(2)} DA</td>
+  `;
+  document.getElementById("orderTable").appendChild(netAmountRow);
+}
+
+function addNewProject() {
+  // Clear previously cloned amount rows
+  const clonedAmountRows = document.querySelectorAll("#orderTable .cloned-row");
+  clonedAmountRows.forEach(row => row.remove());
+
+  // Clear input fields
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById("product" + i).value = "100";
+    document.getElementById("quantity"
++ i).value = "";
+  }
+}
+</script>
+
+</body>
+</html>
